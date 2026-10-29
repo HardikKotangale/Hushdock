@@ -14,7 +14,8 @@ description: A bedside display for phones, Macs and PCs, built with Flutter.
 <meta property="og:description" content="{{ page.description }}">
 <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/images/frame-fullscreen.png">
 <meta name="theme-color" content="#fbfbfd">
-<script>try{document.documentElement.dataset.theme=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}catch(e){}</script>
+<script>document.documentElement.classList.add("js");try{document.documentElement.dataset.theme=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}catch(e){}</script>
+<link rel="preload" as="image" href="images/frame-fullscreen.png" fetchpriority="high">
 <link rel="icon" href="images/app-icon.png">
 <style>
 :root,[data-theme=light]{color-scheme:light;--bg:#fbfbfd;--card:#f5f5f7;--line:#a1a1a6;--fg:#1d1d1f;--dim:#424245;--red:#ff3b30;--nav:#fbfbfdb8;--ok:#0b5d1e}
@@ -80,20 +81,24 @@ footer a{margin:0 8px}
 [data-theme=dark] #theme .moon{opacity:1;transform:none}
 .theming,.theming *{transition:background-color .5s,color .5s,border-color .5s!important}
 @media(prefers-reduced-motion:no-preference){::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}::view-transition-old(root){z-index:1}::view-transition-new(root){z-index:2}}
+video{cursor:pointer;touch-action:manipulation}
+.js .reveal{opacity:0;transform:translateY(24px)}
+.js .reveal.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+@media(prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 <nav><div class="wrap"><b class="brand"><img src="images/app-icon.png" alt="">Hushdock</b><div><a href="#features">Features</a><a href="#engineering">Engineering</a><a href="#platforms">Platforms</a><a href="#contact">Contact</a><button id="theme" aria-label="Toggle light and dark"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div></div></nav>
 
 <header class="wrap hero">
-  <img class="logo" src="images/app-icon.png" alt="Hushdock logo">
+  <img class="logo" src="images/app-icon.png" width="128" height="128" fetchpriority="high" alt="Hushdock logo">
   <h1>Your nightstand,<br><span>quietly</span> smarter.</h1>
   <p>Turn a charging phone or Mac into a bedside clock, weather, music and smart-home display.</p>
   <div class="pills"><span class="pill">Android</span><span class="pill">iPhone</span><span class="pill">Mac</span><span class="pill">Windows (experimental)</span></div>
   <a class="btn" href="#contact">Get in touch</a>
   <div class="shots">
-    <img src="images/frame-fullscreen.png" alt="Frame clock filling the whole screen">
-    <img src="images/night-mode.png" alt="Night mode, dim red">
+    <img src="images/frame-fullscreen.png" width="1400" height="640" fetchpriority="high" decoding="async" alt="Frame clock filling the whole screen">
+    <img src="images/night-mode.png" width="1400" height="640" decoding="async" alt="Night mode, dim red">
   </div>
 </header>
 
@@ -102,58 +107,58 @@ footer a{margin:0 8px}
   <h2>One Flutter codebase.<br>Four platforms.</h2>
   <p class="lead">Inspired by iOS StandBy. Layouts, themes and motion are my own, built on the open-source Standby Pro.</p>
   <div class="stats">
-    <div class="stat"><b>8+</b><span>clock styles, colored per part</span></div>
-    <div class="stat"><b>4</b><span>smart-home brands on one card</span></div>
-    <div class="stat"><b>AES-256</b><span>encrypted backups, Argon2id key</span></div>
-    <div class="stat"><b>4.5:1</b><span>minimum text contrast, Reduce Motion supported</span></div>
+    <div data-r class="stat"><b>8+</b><span>clock styles, colored per part</span></div>
+    <div data-r class="stat"><b>4</b><span>smart-home brands on one card</span></div>
+    <div data-r class="stat"><b>AES-256</b><span>encrypted backups, Argon2id key</span></div>
+    <div data-r class="stat"><b>4.5:1</b><span>minimum text contrast, Reduce Motion supported</span></div>
   </div>
 </section>
 
 <section id="features">
   <h2>Everything you glance at in the dark.</h2>
 
-  <div class="feat" style="margin-top:56px">
+  <div data-r class="feat" style="margin-top:56px">
     <div><h3>Clocks</h3><p>Eight clock styles, colored per part. Turn the phone sideways and the digits glide onto one line.</p></div>
-    <div class="media"><video src="images/clock-rotate.mp4" aria-label="Clocks gliding between one line and stacked hours over minutes" autoplay loop muted playsinline preload="metadata"></video></div>
+    <div class="media"><video data-src="videos/clock-rotate.mp4" poster="videos/clock-rotate.jpg" width="520" height="482" aria-label="Clocks gliding between one line and stacked hours over minutes" muted loop playsinline preload="none"></video></div>
   </div>
-  <div class="media two" style="margin-top:32px">
-    <video src="images/flip-clock.mp4" aria-label="Flip clock: each digit flips on its own card" autoplay loop muted playsinline preload="metadata"></video>
-    <video src="images/flip-9-to-10.mp4" aria-label="Flip clock going from 9:59 to 10:00" autoplay loop muted playsinline preload="metadata"></video>
+  <div data-r class="media two" style="margin-top:32px">
+    <video data-src="videos/flip-clock.mp4" poster="videos/flip-clock.jpg" width="520" height="290" aria-label="Flip clock: each digit flips on its own card" muted loop playsinline preload="none"></video>
+    <video data-src="videos/flip-9-to-10.mp4" poster="videos/flip-9-to-10.jpg" width="560" height="290" aria-label="Flip clock going from 9:59 to 10:00" muted loop playsinline preload="none"></video>
   </div>
 
-  <div class="feat flip" style="margin-top:96px">
+  <div data-r class="feat flip" style="margin-top:96px">
     <div><h3>Weather &amp; calendar</h3><p>Animated weather for your location, plus today, month or upcoming meetings from your calendar.</p></div>
-    <div class="media two"><video src="images/weather-scenes.mp4" aria-label="Animated weather scenes" autoplay loop muted playsinline preload="metadata"></video><video src="images/calendar-rotate.mp4" aria-label="Calendar gliding between portrait and landscape" autoplay loop muted playsinline preload="metadata"></video></div>
+    <div class="media two"><video data-src="videos/weather-scenes.mp4" poster="videos/weather-scenes.jpg" width="340" height="290" aria-label="Animated weather scenes" muted loop playsinline preload="none"></video><video data-src="videos/calendar-rotate.mp4" poster="videos/calendar-rotate.jpg" width="420" height="392" aria-label="Calendar gliding between portrait and landscape" muted loop playsinline preload="none"></video></div>
   </div>
 
-  <div class="feat" style="margin-top:96px">
+  <div data-r class="feat" style="margin-top:96px">
     <div><h3>Summary</h3><p>Up to eight cards on one panel. Hold to rearrange, resize or remove, like the iOS home screen.</p></div>
-    <div class="media"><video src="images/summary-widgets.mp4" aria-label="Summary panel: remove a widget, add the timer" autoplay loop muted playsinline preload="metadata"></video></div>
+    <div class="media"><video data-src="videos/summary-widgets.mp4" poster="videos/summary-widgets.jpg" width="480" height="240" aria-label="Summary panel: remove a widget, add the timer" muted loop playsinline preload="none"></video></div>
   </div>
 
-  <div class="feat flip" style="margin-top:96px">
+  <div data-r class="feat flip" style="margin-top:96px">
     <div><h3>Music &amp; Spotify</h3><p>Controls, search, queue and timed lyrics. Swipe the cover to skip.</p></div>
-    <div class="media two"><video src="images/music-cover-flip.mp4" aria-label="Swiping the cover to skip a song" autoplay loop muted playsinline preload="metadata"></video><video src="images/lyrics.mp4" aria-label="Lyrics following the song" autoplay loop muted playsinline preload="metadata"></video></div>
+    <div class="media two"><video data-src="videos/music-cover-flip.mp4" poster="videos/music-cover-flip.jpg" width="340" height="486" aria-label="Swiping the cover to skip a song" muted loop playsinline preload="none"></video><video data-src="videos/lyrics.mp4" poster="videos/lyrics.jpg" width="340" height="452" aria-label="Lyrics following the song" muted loop playsinline preload="none"></video></div>
   </div>
 
-  <div class="feat" style="margin-top:96px">
+  <div data-r class="feat" style="margin-top:96px">
     <div><h3>Home</h3><p>Lights, plugs and an HDMI sync box from four brands, laid out like Apple Home.</p></div>
-    <div class="media"><video src="images/home-card.mp4" aria-label="Home card switching lights and routines" autoplay loop muted playsinline preload="metadata"></video></div>
+    <div class="media"><video data-src="videos/home-card.mp4" poster="videos/home-card.jpg" width="520" height="356" aria-label="Home card switching lights and routines" muted loop playsinline preload="none"></video></div>
   </div>
 
-  <div class="feat flip" style="margin-top:96px">
+  <div data-r class="feat flip" style="margin-top:96px">
     <div><h3>Timer</h3><p>A flip or digital countdown with a little runner. Confetti when time is up.</p></div>
-    <div class="media"><video src="images/timer-touchdown.mp4" aria-label="Timer finishing with confetti" autoplay loop muted playsinline preload="metadata"></video></div>
+    <div class="media"><video data-src="videos/timer-touchdown.mp4" poster="videos/timer-touchdown.jpg" width="400" height="200" aria-label="Timer finishing with confetti" muted loop playsinline preload="none"></video></div>
   </div>
 
-  <div class="feat" style="margin-top:96px">
+  <div data-r class="feat" style="margin-top:96px">
     <div><h3>Desktop cards <small style="color:var(--dim);font-weight:400">(Mac)</small></h3><p>Live Clock, Timer, Music and Home cards that sit on your Mac desktop.</p></div>
-    <div class="media two"><video src="images/desktop-home.mp4" aria-label="Desktop Home card" autoplay loop muted playsinline preload="metadata"></video><video src="images/desktop-music-search.mp4" aria-label="Desktop Music card search" autoplay loop muted playsinline preload="metadata"></video></div>
+    <div class="media two"><video data-src="videos/desktop-home.mp4" poster="videos/desktop-home.jpg" width="420" height="312" aria-label="Desktop Home card" muted loop playsinline preload="none"></video><video data-src="videos/desktop-music-search.mp4" poster="videos/desktop-music-search.jpg" width="400" height="468" aria-label="Desktop Music card search" muted loop playsinline preload="none"></video></div>
   </div>
 
-  <div class="feat flip" style="margin-top:96px">
+  <div data-r class="feat flip" style="margin-top:96px">
     <div><h3>Night &amp; battery</h3><p>Dim-red night mode with no blue light, OLED burn-in shift, and battery rings.</p></div>
-    <div class="media"><video src="images/battery-rings.mp4" aria-label="Battery rings filling up" autoplay loop muted playsinline preload="metadata"></video></div>
+    <div class="media"><video data-src="videos/battery-rings.mp4" poster="videos/battery-rings.jpg" width="440" height="282" aria-label="Battery rings filling up" muted loop playsinline preload="none"></video></div>
   </div>
 </section>
 
@@ -161,10 +166,10 @@ footer a{margin:0 8px}
   <h2>Built like it matters.</h2>
   <p class="lead">Four problems worth the trouble.</p>
   <div class="notes">
-    <div class="note"><h3>Spotify said yes and played nothing</h3><p>Spotify returns "OK" even when nothing plays, so Hushdock checks the player and says what went wrong.</p></div>
-    <div class="note"><h3>Shared rate limits</h3><p>All installs on one account share a quota, so the app polls less and obeys Spotify's wait time.</p></div>
-    <div class="note"><h3>A race found by a model checker</h3><p>A model checker found a bug where unplugging mid-launch left the app open. Fixed, with regression tests.</p></div>
-    <div class="note"><h3>Battery and smoothness</h3><p>The clock redraws only when a digit changes, so it stays smooth and sips power.</p></div>
+    <div data-r class="note"><h3>Spotify said yes and played nothing</h3><p>Spotify returns "OK" even when nothing plays, so Hushdock checks the player and says what went wrong.</p></div>
+    <div data-r class="note"><h3>Shared rate limits</h3><p>All installs on one account share a quota, so the app polls less and obeys Spotify's wait time.</p></div>
+    <div data-r class="note"><h3>A race found by a model checker</h3><p>A model checker found a bug where unplugging mid-launch left the app open. Fixed, with regression tests.</p></div>
+    <div data-r class="note"><h3>Battery and smoothness</h3><p>The clock redraws only when a digit changes, so it stays smooth and sips power.</p></div>
   </div>
   <div class="pills" style="margin-top:40px"><span class="pill">Flutter</span><span class="pill">Kotlin</span><span class="pill">Swift</span><span class="pill">C++</span><span class="pill">Spotify API</span><span class="pill">OAuth PKCE</span><span class="pill">TLA+ / TLC</span><span class="pill">Argon2id</span><span class="pill">Govee · Tuya · Tapo · AiDot</span></div>
 </section>
@@ -203,6 +208,26 @@ b.onclick=()=>{
   const vt=document.startViewTransition(()=>set(t));
   if(!matchMedia("(prefers-reduced-motion:reduce)").matches)vt.ready.then(()=>h.animate({clipPath:["circle(0 at "+x+"px "+y+"px)","circle("+R+"px at "+x+"px "+y+"px)"]},{duration:750,easing:"cubic-bezier(.22,1,.36,1)",pseudoElement:"::view-transition-new(root)"}));
 };
+</script>
+<script>
+// Videos: load only near the viewport, play only while visible, pause when off-screen.
+const calm=matchMedia("(prefers-reduced-motion:reduce)").matches||(navigator.connection&&navigator.connection.saveData);
+const vids=[...document.querySelectorAll("video[data-src]")];
+const vio=new IntersectionObserver(es=>es.forEach(e=>{
+  const v=e.target;
+  if(e.isIntersecting){
+    if(!v.src&&!calm)v.src=v.dataset.src;
+    if(!calm)v.play().catch(()=>{});
+  }else v.pause();
+}),{rootMargin:"200px 0px",threshold:.15});
+vids.forEach(v=>{
+  vio.observe(v);
+  // tap/click toggles play (also the only way to start in reduced-motion / data-saver)
+  v.onclick=()=>{if(!v.src)v.src=v.dataset.src;v.paused?v.play().catch(()=>{}):v.pause()};
+});
+// Scroll reveal: spring-like ease-out, once.
+const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");rio.unobserve(e.target)}}),{threshold:.12,rootMargin:"0px 0px -6% 0px"});
+document.querySelectorAll("[data-r]").forEach(el=>{el.classList.add("reveal");rio.observe(el)});
 </script>
 </body>
 </html>
