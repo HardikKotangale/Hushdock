@@ -7,7 +7,7 @@ description: A bedside display for phones, Macs and PCs, built with Flutter.
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Hushdock: a bedside display for phones, Macs and PCs</title>
 <meta name="description" content="{{ page.description }}">
 <meta property="og:title" content="Hushdock">
@@ -22,33 +22,35 @@ description: A bedside display for phones, Macs and PCs, built with Flutter.
 [data-theme=dark]{color-scheme:dark;--bg:#000;--card:#111113;--line:#48484a;--fg:#f5f5f7;--dim:#c7c7cc;--red:#ff453a;--nav:#000a;--ok:#30d158}
 @media(prefers-color-scheme:dark){:root:not([data-theme]){color-scheme:dark;--bg:#000;--card:#111113;--line:#48484a;--fg:#f5f5f7;--dim:#c7c7cc;--red:#ff453a;--nav:#000a;--ok:#30d158}}
 *{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--fg);font:19px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:88px}
+body{background:var(--bg);color:var(--fg);overflow-x:hidden;font:clamp(17px,.35vw + 15.5px,21px)/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit}
-.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
-nav{position:sticky;top:0;z-index:9;backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);background:var(--nav);box-shadow:0 0 0 0 transparent;transition:box-shadow .3s}
-nav.scrolled{box-shadow:0 1px 0 var(--line)}
-nav .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:48px}
+.wrap{max-width:clamp(1040px,72vw,1320px);margin:0 auto;padding:0 max(24px,env(safe-area-inset-left)) 0 max(24px,env(safe-area-inset-right))}
+nav{position:fixed;top:max(14px,env(safe-area-inset-top));left:0;right:0;z-index:9;display:flex;justify-content:center;pointer-events:none;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+nav.hide{transform:translateY(-140%);opacity:0;visibility:hidden;transition:transform .7s cubic-bezier(.22,1,.36,1),opacity .35s,visibility 0s .7s}
+.bar{pointer-events:auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:18px;width:min(1000px,calc(100% - 32px));padding:7px 8px 7px 16px;border-radius:99px;background:var(--nav);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);box-shadow:0 0 0 1px #ffffff14,0 10px 40px #00000026;transition:width .7s cubic-bezier(.22,1,.36,1),box-shadow .5s}
+nav.compact .bar{width:min(620px,calc(100% - 32px))}
 .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;letter-spacing:-.01em;text-decoration:none}.brand img{width:26px;height:26px;border:0;background:none;border-radius:0}
-.links{display:flex;gap:32px}
-nav .links a{color:var(--dim);text-decoration:none;font-size:14px;letter-spacing:-.005em;transition:color .2s}
-nav .links a:hover{color:var(--fg)}
-.right{display:flex;justify-content:flex-end;align-items:center;gap:14px}
-.cta-s{font-size:14px;font-weight:500;text-decoration:none;background:var(--fg);color:var(--bg);border-radius:99px;padding:4px 14px}
-.hero{text-align:center;padding:96px 0 48px}
+.links{position:relative;display:flex}
+.links a{position:relative;z-index:1;color:var(--dim);text-decoration:none;font-size:14px;padding:6px 14px;border-radius:99px;transition:color .25s}
+.links a:hover,.links a.on{color:var(--fg)}
+.ind{position:absolute;top:0;left:0;height:100%;border-radius:99px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);opacity:0;transition:transform .55s cubic-bezier(.22,1,.36,1),width .55s cubic-bezier(.22,1,.36,1),opacity .3s}
+.right{display:flex;align-items:center;gap:10px}
+.cta-s{font-size:14px;font-weight:500;text-decoration:none;background:var(--fg);color:var(--bg);border-radius:99px;padding:6px 16px}
 .logo{width:128px;height:128px;margin:0 auto 12px;border:0;background:none;border-radius:0}
-.hero h1{font-size:clamp(44px,8vw,84px);line-height:1.02;letter-spacing:-.04em;font-weight:700}
+.hero{text-align:center;padding-top:128px;padding-bottom:48px}
+.hero h1{font-size:clamp(40px,9vw,92px);line-height:1.02;letter-spacing:-.04em;font-weight:700}
 .hero h1 span{color:var(--red)}
 .hero p{max-width:620px;margin:24px auto 0;color:var(--dim);font-size:clamp(18px,2.4vw,22px)}
 .pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:32px}
 .pill{border:1px solid var(--line);border-radius:99px;padding:8px 18px;font-size:17px;color:var(--dim)}
 .btn{display:inline-block;margin-top:32px;background:var(--fg);color:var(--bg);text-decoration:none;font-weight:600;border-radius:99px;padding:12px 28px}
 .shots{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:56px 0 24px}
-img,video{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var(--line);background:var(--card)}
+img{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var(--line);background:var(--card)}
 section{padding:72px 0;border-top:1px solid var(--line)}
 h2{font-size:clamp(30px,5vw,48px);letter-spacing:-.03em;line-height:1.1}
 .lead{font-size:19px;color:var(--dim);max-width:640px;margin-top:16px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:40px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:16px;margin-top:40px}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
 .stat b{display:block;font-size:32px;letter-spacing:-.03em}
 .stat span{color:var(--dim);font-size:17px}
@@ -58,7 +60,7 @@ h2{font-size:clamp(30px,5vw,48px);letter-spacing:-.03em;line-height:1.1}
 .feat p{color:var(--dim)}
 .media{display:grid;gap:12px;justify-items:center}
 .media.two{grid-template-columns:1fr 1fr}
-.media img,.media video{max-width:420px}
+.media img{max-width:420px}
 .notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
 .note{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px}
 .note h3{font-size:21px;margin-bottom:8px}
@@ -74,9 +76,8 @@ td:not(:first-child),th:not(:first-child){text-align:center}
 .cta .lead{margin-inline:auto}
 footer{border-top:1px solid var(--line);padding:32px 0;color:var(--dim);font-size:17px;text-align:center}
 footer a{margin:0 8px}
-@media(max-width:760px){.feat,.shots,.notes{grid-template-columns:1fr}.feat{gap:28px}.feat.flip .media{order:0}.links{display:none}nav .wrap{grid-template-columns:1fr auto}}
-@media(prefers-reduced-transparency:reduce){nav{backdrop-filter:none;background:var(--bg)}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media(prefers-reduced-transparency:reduce){.bar{backdrop-filter:none;background:var(--bg)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}nav,.bar,.ind{transition:none}}
 #theme{width:28px;height:28px;border:0;background:none;color:var(--dim);cursor:pointer;position:relative;border-radius:50%;transition:color .2s,transform .2s cubic-bezier(.22,1,.36,1)}#theme:hover{color:var(--fg)}
 #theme:active{transform:scale(.92)}
 #theme svg{position:absolute;inset:5px;width:18px;height:18px;transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .3s}
@@ -85,14 +86,56 @@ footer a{margin:0 8px}
 [data-theme=dark] #theme .moon{opacity:1;transform:none}
 .theming,.theming *{transition:background-color .5s,color .5s,border-color .5s!important}
 @media(prefers-reduced-motion:no-preference){::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}::view-transition-old(root){z-index:1}::view-transition-new(root){z-index:2}}
-video{cursor:pointer;touch-action:manipulation}
 .js .reveal{opacity:0;transform:translateY(24px)}
 .js .reveal.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
 @media(prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none}}
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:no-preference){.js .hero>*{animation:up 1s cubic-bezier(.22,1,.36,1) both}.hero>:nth-child(2){animation-delay:.08s}.hero>:nth-child(3){animation-delay:.16s}.hero>:nth-child(4){animation-delay:.24s}.hero>:nth-child(5){animation-delay:.32s}.hero>:nth-child(6){animation-delay:.4s}}
+
+/* ---- responsive ---- */
+.menu{display:none;position:relative;width:40px;height:40px;border:0;background:none;color:var(--fg);cursor:pointer;border-radius:50%}
+.menu i{position:absolute;left:12px;right:12px;height:2px;border-radius:2px;background:currentColor;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.menu i:first-child{top:15px}.menu i:last-child{top:23px}
+nav.open .menu i:first-child{transform:translateY(4px) rotate(45deg)}
+nav.open .menu i:last-child{transform:translateY(-4px) rotate(-45deg)}
+.scrim{position:fixed;inset:0;z-index:8;background:#0006;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;top:calc(100% + 8px);left:50%;width:min(620px,calc(100% - 32px));padding:8px;border-radius:28px;background:var(--bg);box-shadow:0 0 0 1px #ffffff14,0 24px 60px #0004;pointer-events:auto;opacity:0;visibility:hidden;transform:translate(-50%,-10px) scale(.96);transform-origin:top center;transition:opacity .3s,transform .55s cubic-bezier(.22,1,.36,1),visibility 0s .55s}
+nav.open .sheet{opacity:1;visibility:visible;transform:translate(-50%,0);transition-delay:0s}
+.sheet a{display:block;padding:15px 18px;font-size:19px;font-weight:500;text-decoration:none;border-radius:18px}
+.sheet a:active{background:var(--card)}
+.sheet .go{margin-top:6px;text-align:center;background:var(--fg);color:var(--bg);border-radius:99px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-inline:calc(-1*max(24px,env(safe-area-inset-left)));padding-inline:max(24px,env(safe-area-inset-left))}
+.scroll table{min-width:600px}
+.scroll td:first-child,.scroll th:first-child{position:sticky;left:0;background:var(--bg)}
+@media(hover:none){.links a:hover{color:var(--dim)}}
+@media(pointer:coarse){#theme{width:44px;height:44px}#theme svg{inset:13px}.btn{padding:15px 32px}}
+@media(min-width:1800px){.media img{max-width:520px}.feat{gap:80px}}
+@media(max-width:1024px){.feat{gap:36px}.stat b{font-size:28px}.bar{gap:10px}.links a{font-size:13.5px;padding:6px 11px}.cta-s{font-size:13.5px;padding:6px 13px}.brand{font-size:14px}}
+@media(max-width:820px){
+  .feat{grid-template-columns:1fr;gap:24px}.feat.flip .media{order:0}
+  .notes{grid-template-columns:1fr}
+  section{padding:56px 0}
+  .hero{padding-top:calc(104px + env(safe-area-inset-top))}
+  .logo{width:104px;height:104px}
+}
+@media(max-width:679px){.links,.cta-s{display:none}.menu{display:block}}
+@media(max-width:600px){
+  .shots{grid-template-columns:1fr;margin-top:40px}
+  .pill{font-size:16px;padding:7px 15px}
+  .note{padding:22px}
+  td,th{padding:12px 10px}
+  footer a{display:inline-block;padding:8px}
+}
+@media(max-width:520px){.media.two{grid-template-columns:1fr}.media img{max-width:100%}}
+@media(max-height:520px) and (orientation:landscape){.hero{padding-top:96px}.logo{width:72px;height:72px}}
+footer{padding-bottom:max(32px,env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
-<nav id="nav"><div class="wrap"><a class="brand" href="#top"><img src="images/app-icon.png" alt="">Hushdock</a><div class="links"><a href="#features">Features</a><a href="#engineering">Engineering</a><a href="#platforms">Platforms</a></div><div class="right"><button id="theme" aria-label="Toggle light and dark"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button><a class="cta-s" href="#contact">Contact</a></div></div></nav>
+<div class="scrim" id="scrim"></div>
+<nav id="nav"><div class="bar"><a class="brand" href="#top"><img src="images/app-icon.png" alt="" width="26" height="26">Hushdock</a><div class="links"><span class="ind"></span><a href="#features">Features</a><a href="#engineering">Engineering</a><a href="#platforms">Platforms</a></div><div class="right"><button id="theme" aria-label="Toggle light and dark"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button><a class="cta-s" href="#contact">Contact</a><button id="menu" class="menu" aria-label="Menu" aria-expanded="false" aria-controls="sheet"><i></i><i></i></button></div></div>
+<div class="sheet" id="sheet"><a href="#features">Features</a><a href="#engineering">Engineering</a><a href="#platforms">Platforms</a><a class="go" href="#contact">Contact</a></div></nav>
 
 <header class="wrap hero" id="top">
   <img class="logo" src="images/app-icon.png" width="128" height="128" fetchpriority="high" alt="Hushdock logo">
@@ -123,46 +166,46 @@ video{cursor:pointer;touch-action:manipulation}
 
   <div data-r class="feat" style="margin-top:56px">
     <div><h3>Clocks</h3><p>Eight clock styles, colored per part. Turn the phone sideways and the digits glide onto one line.</p></div>
-    <div class="media"><video data-src="videos/clock-rotate.mp4" poster="videos/clock-rotate.jpg" width="520" height="482" aria-label="Clocks gliding between one line and stacked hours over minutes" muted loop playsinline preload="none"></video></div>
+    <div class="media"><img src="images/clock-rotate.gif" width="520" height="483" alt="Clocks gliding between one line and stacked hours over minutes" loading="lazy" decoding="async"></div>
   </div>
   <div data-r class="media two" style="margin-top:32px">
-    <video data-src="videos/flip-clock.mp4" poster="videos/flip-clock.jpg" width="520" height="290" aria-label="Flip clock: each digit flips on its own card" muted loop playsinline preload="none"></video>
-    <video data-src="videos/flip-9-to-10.mp4" poster="videos/flip-9-to-10.jpg" width="560" height="290" aria-label="Flip clock going from 9:59 to 10:00" muted loop playsinline preload="none"></video>
+    <img src="images/flip-clock.gif" width="520" height="290" alt="Flip clock: each digit flips on its own card" loading="lazy" decoding="async">
+    <img src="images/flip-9-to-10.gif" width="480" height="240" alt="Flip clock going from 9:59 to 10:00" loading="lazy" decoding="async">
   </div>
 
   <div data-r class="feat flip" style="margin-top:96px">
     <div><h3>Weather &amp; calendar</h3><p>Animated weather for your location, plus today, month or upcoming meetings from your calendar.</p></div>
-    <div class="media two"><video data-src="videos/weather-scenes.mp4" poster="videos/weather-scenes.jpg" width="340" height="290" aria-label="Animated weather scenes" muted loop playsinline preload="none"></video><video data-src="videos/calendar-rotate.mp4" poster="videos/calendar-rotate.jpg" width="420" height="392" aria-label="Calendar gliding between portrait and landscape" muted loop playsinline preload="none"></video></div>
+    <div class="media two"><img src="images/weather-scenes.gif" width="340" height="290" alt="Animated weather scenes" loading="lazy" decoding="async"><img src="images/calendar-rotate.gif" width="420" height="392" alt="Calendar gliding between portrait and landscape" loading="lazy" decoding="async"></div>
   </div>
 
   <div data-r class="feat" style="margin-top:96px">
     <div><h3>Summary</h3><p>Up to eight cards on one panel. Hold to rearrange, resize or remove, like the iOS home screen.</p></div>
-    <div class="media"><video data-src="videos/summary-widgets.mp4" poster="videos/summary-widgets.jpg" width="480" height="240" aria-label="Summary panel: remove a widget, add the timer" muted loop playsinline preload="none"></video></div>
+    <div class="media"><img src="images/summary-widgets.gif" width="480" height="240" alt="Summary panel: remove a widget, add the timer" loading="lazy" decoding="async"></div>
   </div>
 
   <div data-r class="feat flip" style="margin-top:96px">
     <div><h3>Music &amp; Spotify</h3><p>Controls, search, queue and timed lyrics. Swipe the cover to skip.</p></div>
-    <div class="media two"><video data-src="videos/music-cover-flip.mp4" poster="videos/music-cover-flip.jpg" width="340" height="486" aria-label="Swiping the cover to skip a song" muted loop playsinline preload="none"></video><video data-src="videos/lyrics.mp4" poster="videos/lyrics.jpg" width="340" height="452" aria-label="Lyrics following the song" muted loop playsinline preload="none"></video></div>
+    <div class="media two"><img src="images/music-cover-flip.gif" width="340" height="486" alt="Swiping the cover to skip a song" loading="lazy" decoding="async"><img src="images/lyrics.gif" width="340" height="453" alt="Lyrics following the song" loading="lazy" decoding="async"></div>
   </div>
 
   <div data-r class="feat" style="margin-top:96px">
     <div><h3>Home</h3><p>Lights, plugs and an HDMI sync box from four brands, laid out like Apple Home.</p></div>
-    <div class="media"><video data-src="videos/home-card.mp4" poster="videos/home-card.jpg" width="520" height="356" aria-label="Home card switching lights and routines" muted loop playsinline preload="none"></video></div>
+    <div class="media"><img src="images/home-card.gif" width="520" height="356" alt="Home card switching lights and routines" loading="lazy" decoding="async"></div>
   </div>
 
   <div data-r class="feat flip" style="margin-top:96px">
     <div><h3>Timer</h3><p>A flip or digital countdown with a little runner. Confetti when time is up.</p></div>
-    <div class="media"><video data-src="videos/timer-touchdown.mp4" poster="videos/timer-touchdown.jpg" width="400" height="200" aria-label="Timer finishing with confetti" muted loop playsinline preload="none"></video></div>
+    <div class="media"><img src="images/timer-touchdown.gif" width="400" height="200" alt="Timer finishing with confetti" loading="lazy" decoding="async"></div>
   </div>
 
   <div data-r class="feat" style="margin-top:96px">
     <div><h3>Desktop cards <small style="color:var(--dim);font-weight:400">(Mac)</small></h3><p>Live Clock, Timer, Music and Home cards that sit on your Mac desktop.</p></div>
-    <div class="media two"><video data-src="videos/desktop-home.mp4" poster="videos/desktop-home.jpg" width="420" height="312" aria-label="Desktop Home card" muted loop playsinline preload="none"></video><video data-src="videos/desktop-music-search.mp4" poster="videos/desktop-music-search.jpg" width="400" height="468" aria-label="Desktop Music card search" muted loop playsinline preload="none"></video></div>
+    <div class="media two"><img src="images/desktop-home.gif" width="420" height="312" alt="Desktop Home card" loading="lazy" decoding="async"><img src="images/desktop-music-search.gif" width="400" height="468" alt="Desktop Music card search" loading="lazy" decoding="async"></div>
   </div>
 
   <div data-r class="feat flip" style="margin-top:96px">
     <div><h3>Night &amp; battery</h3><p>Dim-red night mode with no blue light, OLED burn-in shift, and battery rings.</p></div>
-    <div class="media"><video data-src="videos/battery-rings.mp4" poster="videos/battery-rings.jpg" width="440" height="282" aria-label="Battery rings filling up" muted loop playsinline preload="none"></video></div>
+    <div class="media"><img src="images/battery-rings.gif" width="440" height="283" alt="Battery rings filling up" loading="lazy" decoding="async"></div>
   </div>
 </section>
 
@@ -180,7 +223,7 @@ video{cursor:pointer;touch-action:manipulation}
 
 <section id="platforms">
   <h2>Platforms</h2>
-  <table>
+  <div class="scroll"><table>
     <tr><th>Feature</th><th>Android</th><th>iPhone</th><th>Mac</th><th>Windows</th></tr>
     <tr><td>Clocks, themes, layouts</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
     <tr><td>Weather, calendar, world clock</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
@@ -189,7 +232,7 @@ video{cursor:pointer;touch-action:manipulation}
     <tr><td>Photo slideshow</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
     <tr><td>Bluetooth accessory batteries</td><td class="y">Yes</td><td class="n">No</td><td class="y">Yes</td><td class="y">Yes</td></tr>
     <tr><td>Opens itself when docked</td><td class="y">Yes</td><td class="n">No</td><td class="n">No</td><td class="n">No</td></tr>
-  </table>
+  </table></div>
 </section>
 
 <section id="contact" class="cta">
@@ -214,25 +257,32 @@ b.onclick=()=>{
 };
 </script>
 <script>
-// Videos: load only near the viewport, play only while visible, pause when off-screen.
-const calm=matchMedia("(prefers-reduced-motion:reduce)").matches||(navigator.connection&&navigator.connection.saveData);
-const vids=[...document.querySelectorAll("video[data-src]")];
-const vio=new IntersectionObserver(es=>es.forEach(e=>{
-  const v=e.target;
-  if(e.isIntersecting){
-    if(!v.src&&!calm)v.src=v.dataset.src;
-    if(!calm)v.play().catch(()=>{});
-  }else{v.pause();if(v.src)v.currentTime=0}  // back to the first frame so it never shows a stale one
-}),{rootMargin:"200px 0px",threshold:.15});
-vids.forEach(v=>{
-  vio.observe(v);
-  // tap/click toggles play (also the only way to start in reduced-motion / data-saver)
-  v.onclick=()=>{if(!v.src)v.src=v.dataset.src;v.paused?v.play().catch(()=>{}):v.pause()};
-});
 // Scroll reveal: spring-like ease-out, once.
 const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");rio.unobserve(e.target)}}),{threshold:.12,rootMargin:"0px 0px -6% 0px"});
 document.querySelectorAll("[data-r]").forEach(el=>{el.classList.add("reveal");rio.observe(el)});
-const nav=document.getElementById("nav");addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>4),{passive:true});
+// Dynamic nav: morphs to a compact pill after the top, hides on scroll down, returns on scroll up; a sliding highlight follows the section in view.
+const nav=document.getElementById("nav"),ind=nav.querySelector(".ind"),ls=[...nav.querySelectorAll(".links a")],secs=ls.map(a=>document.querySelector(a.hash));
+let ly=scrollY,cur=null;
+function mark(){
+  const k=secs.findIndex(el=>{const r=el.getBoundingClientRect();return r.top<innerHeight*.4&&r.bottom>innerHeight*.4});
+  if(k===cur)return;cur=k;ls.forEach((a,i)=>a.classList.toggle("on",i===k));
+  if(k<0){ind.style.opacity=0;return}
+  const a=ls[k];ind.style.opacity=1;ind.style.width=a.offsetWidth+"px";ind.style.transform="translateX("+a.offsetLeft+"px)";
+}
+addEventListener("scroll",()=>{
+  const y=scrollY;nav.classList.toggle("compact",y>40);
+  if(Math.abs(y-ly)>6){nav.classList.toggle("hide",y>ly&&y>200&&!nav.classList.contains("open"));ly=y}
+  mark();
+},{passive:true});
+mark();
+const menu=document.getElementById("menu"),scrim=document.getElementById("scrim"),sheet=document.getElementById("sheet");
+sheet.inert=true;
+function setMenu(o){nav.classList.toggle("open",o);menu.setAttribute("aria-expanded",o);scrim.classList.toggle("on",o);document.documentElement.style.overflow=o?"hidden":"";sheet.inert=!o}
+menu.onclick=()=>setMenu(!nav.classList.contains("open"));
+scrim.onclick=()=>setMenu(false);
+sheet.onclick=e=>{if(e.target.closest("a"))setMenu(false)};
+addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
+matchMedia("(min-width:680px)").addEventListener("change",e=>e.matches&&setMenu(false));
 </script>
 </body>
 </html>
