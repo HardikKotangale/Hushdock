@@ -50,7 +50,7 @@ img{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var
 section{padding:72px 0;border-top:1px solid var(--line)}
 h2{font-size:clamp(30px,5vw,48px);letter-spacing:-.03em;line-height:1.1}
 .lead{font-size:19px;color:var(--dim);max-width:640px;margin-top:16px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:16px;margin-top:40px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:16px;margin-top:40px}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
 .stat b{display:block;font-size:32px;letter-spacing:-.03em}
 .stat span{color:var(--dim);font-size:17px}
@@ -154,9 +154,10 @@ footer{padding-bottom:max(32px,env(safe-area-inset-bottom))}
   <h2>One Flutter codebase.<br>Four platforms.</h2>
   <p class="lead">Inspired by iOS StandBy. Layouts, themes and motion are my own, built on the open-source Standby Pro.</p>
   <div class="stats">
-    <div data-r class="stat"><b>8+</b><span>clock styles, colored per part</span></div>
+    <div data-r class="stat"><b>8</b><span>clock styles, colored per part</span></div>
     <div data-r class="stat"><b>4</b><span>smart-home brands on one card</span></div>
     <div data-r class="stat"><b>AES-256</b><span>encrypted backups, Argon2id key</span></div>
+    <div data-r class="stat"><b>723</b><span>passing tests: 695 Flutter and 28 Kotlin JUnit</span></div>
     <div data-r class="stat"><b>4.5:1</b><span>minimum text contrast, Reduce Motion supported</span></div>
   </div>
 </section>
@@ -213,12 +214,12 @@ footer{padding-bottom:max(32px,env(safe-area-inset-bottom))}
   <h2>Built like it matters.</h2>
   <p class="lead">Four problems worth the trouble.</p>
   <div class="notes">
-    <div data-r class="note"><h3>Spotify said yes and played nothing</h3><p>Spotify returns "OK" even when nothing plays, so Hushdock checks the player and says what went wrong.</p></div>
+    <div data-r class="note"><h3>Spotify said yes and played nothing</h3><p>Spotify returns 204 (accepted) even when nothing plays, so Hushdock checks the player state and says what went wrong.</p></div>
     <div data-r class="note"><h3>Shared rate limits</h3><p>All installs on one account share a quota, so the app polls less and obeys Spotify's wait time.</p></div>
-    <div data-r class="note"><h3>A race found by a model checker</h3><p>A model checker found a bug where unplugging mid-launch left the app open. Fixed, with regression tests.</p></div>
+    <div data-r class="note"><h3>A race found by a model checker</h3><p>A model checker found that unplugging during the 700 ms launch delay left the app open. Fixed, and 6 model-checker traces now replay as regression tests.</p></div>
     <div data-r class="note"><h3>Battery and smoothness</h3><p>The clock redraws only when a digit changes, so it stays smooth and sips power.</p></div>
   </div>
-  <div class="pills" style="margin-top:40px"><span class="pill">Flutter</span><span class="pill">Kotlin</span><span class="pill">Swift</span><span class="pill">C++</span><span class="pill">Spotify API</span><span class="pill">OAuth PKCE</span><span class="pill">TLA+ / TLC</span><span class="pill">Argon2id</span><span class="pill">Govee · Tuya · Tapo · AiDot</span></div>
+  <div class="pills" style="margin-top:40px"><span class="pill">Flutter</span><span class="pill">Kotlin</span><span class="pill">Swift</span><span class="pill">C++</span><span class="pill">Spotify API</span><span class="pill">Google &amp; Microsoft Calendar (OAuth PKCE)</span><span class="pill">TLA+ / TLC</span><span class="pill">Argon2id</span><span class="pill">Govee · Tuya · Tapo · AiDot</span></div>
 </section>
 
 <section id="platforms">
