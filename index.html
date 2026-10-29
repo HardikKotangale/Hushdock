@@ -17,7 +17,7 @@ description: A bedside display for phones, Macs and PCs, built with Flutter.
 <script>try{document.documentElement.dataset.theme=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}catch(e){}</script>
 <link rel="icon" href="images/app-icon.png">
 <style>
-:root,[data-theme=light]{color-scheme:light;--bg:#fbfbfd;--card:#f5f5f7;--line:#a1a1a6;--fg:#1d1d1f;--dim:#424245;--red:#ff3b30;--nav:#fbfbfdb8;--ok:#1a6e30}
+:root,[data-theme=light]{color-scheme:light;--bg:#fbfbfd;--card:#f5f5f7;--line:#a1a1a6;--fg:#1d1d1f;--dim:#424245;--red:#ff3b30;--nav:#fbfbfdb8;--ok:#0b5d1e}
 [data-theme=dark]{color-scheme:dark;--bg:#000;--card:#111113;--line:#48484a;--fg:#f5f5f7;--dim:#c7c7cc;--red:#ff453a;--nav:#000a;--ok:#30d158}
 @media(prefers-color-scheme:dark){:root:not([data-theme]){color-scheme:dark;--bg:#000;--card:#111113;--line:#48484a;--fg:#f5f5f7;--dim:#c7c7cc;--red:#ff453a;--nav:#000a;--ok:#30d158}}
 *{box-sizing:border-box;margin:0}
@@ -62,7 +62,7 @@ table{width:100%;border-collapse:collapse;margin-top:32px;font-size:18px}
 th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line)}
 th{color:var(--dim);font-weight:500}
 td:not(:first-child),th:not(:first-child){text-align:center}
-.y{color:var(--ok)}.n{color:var(--dim)}
+.y{color:var(--ok);font-weight:700}.y::before{content:"\2713\00a0"}.n::before{content:"\2013\00a0"}.n{color:var(--dim)}
 .rows td:first-child{color:var(--dim);width:150px;vertical-align:top}
 .rows td:not(:first-child){text-align:left}
 .cta{text-align:center}
