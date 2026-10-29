@@ -1,0 +1,185 @@
+---
+layout: null
+title: Hushdock
+description: A bedside display for phones, Macs and PCs, built with Flutter.
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hushdock: a bedside display for phones, Macs and PCs</title>
+<meta name="description" content="{{ page.description }}">
+<meta property="og:title" content="Hushdock">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/images/frame-fullscreen.png">
+<meta name="theme-color" content="#000">
+<style>
+:root{--bg:#000;--card:#111113;--line:#222226;--fg:#f5f5f7;--dim:#8e8e93;--red:#ff453a}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:9;backdrop-filter:blur(20px);background:#000a;border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;height:56px}
+nav b{letter-spacing:-.02em}
+nav a{color:var(--dim);text-decoration:none;font-size:15px;margin-left:24px}
+nav a:hover{color:var(--fg)}
+.hero{text-align:center;padding:96px 0 48px}
+.hero h1{font-size:clamp(44px,8vw,84px);line-height:1.02;letter-spacing:-.04em;font-weight:700}
+.hero h1 span{color:var(--red)}
+.hero p{max-width:620px;margin:24px auto 0;color:var(--dim);font-size:clamp(18px,2.4vw,22px)}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.pill{border:1px solid var(--line);border-radius:99px;padding:6px 16px;font-size:14px;color:var(--dim)}
+.btn{display:inline-block;margin-top:32px;background:var(--fg);color:#000;text-decoration:none;font-weight:600;border-radius:99px;padding:12px 28px}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:56px 0 24px}
+img,video{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var(--line);background:var(--card)}
+section{padding:72px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(30px,5vw,48px);letter-spacing:-.03em;line-height:1.1}
+.lead{color:var(--dim);max-width:640px;margin-top:16px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:40px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
+.stat b{display:block;font-size:32px;letter-spacing:-.03em}
+.stat span{color:var(--dim);font-size:15px}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.feat.flip .media{order:-1}
+.feat h3{font-size:30px;letter-spacing:-.02em;margin-bottom:12px}
+.feat p{color:var(--dim)}
+.media{display:grid;gap:12px;justify-items:center}
+.media.two{grid-template-columns:1fr 1fr}
+.media img,.media video{max-width:420px}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px}
+.note h3{font-size:19px;margin-bottom:8px}
+.note p{color:var(--dim);font-size:15.5px}
+table{width:100%;border-collapse:collapse;margin-top:32px;font-size:15.5px}
+th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--dim);font-weight:500}
+td:not(:first-child),th:not(:first-child){text-align:center}
+.y{color:#30d158}.n{color:var(--dim)}
+.rows td:first-child{color:var(--dim);width:150px;vertical-align:top}
+.rows td:not(:first-child){text-align:left}
+.cta{text-align:center}
+.cta .lead{margin-inline:auto}
+footer{border-top:1px solid var(--line);padding:32px 0;color:var(--dim);font-size:14px;text-align:center}
+footer a{margin:0 8px}
+@media(max-width:760px){.feat,.shots,.notes{grid-template-columns:1fr}.feat{gap:28px}.feat.flip .media{order:0}nav a:not(:last-child){display:none}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><b>Hushdock</b><div><a href="#features">Features</a><a href="#engineering">Engineering</a><a href="#platforms">Platforms</a><a href="#contact">Contact</a></div></div></nav>
+
+<header class="wrap hero">
+  <h1>Your nightstand,<br><span>quietly</span> smarter.</h1>
+  <p>Hushdock turns a charging phone or a Mac into a bedside display: big readable clocks, live weather, calendar, timer, Spotify with timed lyrics and smart-home controls.</p>
+  <div class="pills"><span class="pill">Android</span><span class="pill">iPhone</span><span class="pill">Mac</span><span class="pill">Windows (experimental)</span></div>
+  <a class="btn" href="#contact">Get in touch</a>
+  <div class="shots">
+    <img src="images/frame-fullscreen.png" alt="Frame clock filling the whole screen">
+    <img src="images/night-mode.png" alt="Night mode, dim red">
+  </div>
+</header>
+
+<main class="wrap">
+<section>
+  <h2>One Flutter codebase.<br>Four platforms.</h2>
+  <p class="lead">Inspired by iOS StandBy. The layouts, themes, controls and motion are my own, built on top of the open-source Standby Pro project.</p>
+  <div class="stats">
+    <div class="stat"><b>8+</b><span>clock styles, colored per part</span></div>
+    <div class="stat"><b>4</b><span>smart-home brands on one card</span></div>
+    <div class="stat"><b>AES-256</b><span>encrypted backups, Argon2id key</span></div>
+    <div class="stat"><b>4.5:1</b><span>minimum text contrast, Reduce Motion supported</span></div>
+  </div>
+</section>
+
+<section id="features">
+  <h2>Everything you glance at in the dark.</h2>
+
+  <div class="feat" style="margin-top:56px">
+    <div><h3>Clocks</h3><p>Digital, analog, frame, flip, mono, float, text and world clock, with colors set per part and presets like "Night red." Held upright, the clocks stack hours over minutes; turned sideways they glide back onto one line. The flip clock gives every digit its own hinged card, and a digit only flips when it changes.</p></div>
+    <div class="media"><video src="images/clock-rotate.mp4" aria-label="Clocks gliding between one line and stacked hours over minutes" autoplay loop muted playsinline preload="metadata"></video></div>
+  </div>
+  <div class="media two" style="margin-top:32px">
+    <video src="images/flip-clock.mp4" aria-label="Flip clock: each digit flips on its own card" autoplay loop muted playsinline preload="metadata"></video>
+    <video src="images/flip-9-to-10.mp4" aria-label="Flip clock going from 9:59 to 10:00" autoplay loop muted playsinline preload="metadata"></video>
+  </div>
+
+  <div class="feat flip" style="margin-top:96px">
+    <div><h3>Weather &amp; calendar</h3><p>Animated weather scenes from your location, with four pages: now, Fahrenheit, forecast and a second city. The calendar shows today, the month or upcoming meetings, read-only from the Mac or iPhone Calendar app, or from a pasted Google, Outlook, Zoho or iCloud link on Android and Windows.</p></div>
+    <div class="media two"><video src="images/weather-scenes.mp4" aria-label="Animated weather scenes" autoplay loop muted playsinline preload="metadata"></video><video src="images/calendar-rotate.mp4" aria-label="Calendar gliding between portrait and landscape" autoplay loop muted playsinline preload="metadata"></video></div>
+  </div>
+
+  <div class="feat" style="margin-top:96px">
+    <div><h3>Summary</h3><p>Up to eight cards on one panel. Hold a card and they jiggle like the iOS home screen: remove, add, drag to move, and pull a corner to resize.</p></div>
+    <div class="media"><video src="images/summary-widgets.mp4" aria-label="Summary panel: remove a widget, add the timer" autoplay loop muted playsinline preload="metadata"></video></div>
+  </div>
+
+  <div class="feat flip" style="margin-top:96px">
+    <div><h3>Music &amp; Spotify</h3><p>What's playing, with transport controls, seeking, search on the app's own keyboard, the queue, playlists, device switching and volume. Timed lyrics scroll with the song, and Indian-language lyrics can be shown in English letters. Swipe the cover to skip; it turns over when the song changes.</p></div>
+    <div class="media two"><video src="images/music-cover-flip.mp4" aria-label="Swiping the cover to skip a song" autoplay loop muted playsinline preload="metadata"></video><video src="images/lyrics.mp4" aria-label="Lyrics following the song" autoplay loop muted playsinline preload="metadata"></video></div>
+  </div>
+
+  <div class="feat" style="margin-top:96px">
+    <div><h3>Home</h3><p>Smart lights, plugs and an HDMI sync box from four brands on one card, laid out like Apple Home: routines along the top, devices below.</p></div>
+    <div class="media"><video src="images/home-card.mp4" aria-label="Home card switching lights and routines" autoplay loop muted playsinline preload="metadata"></video></div>
+  </div>
+
+  <div class="feat flip" style="margin-top:96px">
+    <div><h3>Timer</h3><p>A digital or flip countdown with a small figure running along a track. When time is up, the player scores and the confetti flies.</p></div>
+    <div class="media"><video src="images/timer-touchdown.mp4" aria-label="Timer finishing with confetti" autoplay loop muted playsinline preload="metadata"></video></div>
+  </div>
+
+  <div class="feat" style="margin-top:96px">
+    <div><h3>Desktop cards <small style="color:var(--dim);font-weight:400">(Mac)</small></h3><p>Live Clock, Timer, Music and Home cards that sit on the Mac desktop behind your windows, each with its own settings.</p></div>
+    <div class="media two"><video src="images/desktop-home.mp4" aria-label="Desktop Home card" autoplay loop muted playsinline preload="metadata"></video><video src="images/desktop-music-search.mp4" aria-label="Desktop Music card search" autoplay loop muted playsinline preload="metadata"></video></div>
+  </div>
+
+  <div class="feat flip" style="margin-top:96px">
+    <div><h3>Night &amp; battery</h3><p>Brightness that follows the room light on Android, a night mode that fades to dim red with no blue light, an OLED burn-in shift, and battery rings for the device and its Bluetooth accessories.</p></div>
+    <div class="media"><video src="images/battery-rings.mp4" aria-label="Battery rings filling up" autoplay loop muted playsinline preload="metadata"></video></div>
+  </div>
+</section>
+
+<section id="engineering">
+  <h2>Built like it matters.</h2>
+  <p class="lead">The problems that took the longest, and what I did about them.</p>
+  <div class="notes">
+    <div class="note"><h3>Spotify said yes and played nothing</h3><p>Spotify's "play this" returns 204 (accepted) even when its player then loads nothing. Hushdock checks the player state after every play request and tells the user what Spotify reported. Each platform needed its own path: the Mac desktop app ignores remote play while stopped, so Hushdock queues the song and skips to it; on iPhone it tries Spotify's iOS SDK first.</p></div>
+    <div class="note"><h3>Shared rate limits</h3><p>Every install on one Spotify account shares one quota. The app slows its polling when only a desktop card is watching or nothing is playing, and when Spotify says "too many requests" it waits exactly as long as Spotify asks.</p></div>
+    <div class="note"><h3>A race found by a model checker</h3><p>Unplug the phone during the 700 ms launch delay and the app still opened, and nothing ever closed it. TLC found it by trying every order of events. Fixed in Kotlin, the decision logic pulled into a plain class, and TLC's failing traces replayed as JUnit tests. In total: 4 safety bugs and 1 liveness gap, all fixed.</p></div>
+    <div class="note"><h3>Battery and smoothness</h3><p>The clock redraws only when a digit changes, nothing animates while the window is hidden, and card changes slide a pre-drawn picture so even blurred, glass-heavy cards move smoothly on a large monitor.</p></div>
+  </div>
+  <table class="rows">
+    <tr><td>Integrations</td><td>Spotify Web API and iOS SDK, read-only Google and Microsoft calendars over OAuth PKCE, Govee, Tuya (Smart Life), Tapo and AiDot, YouTube Music in Chrome, LRCLIB lyrics, Open-Meteo weather</td></tr>
+    <tr><td>Security</td><td>AES-256-GCM encrypted backups with an Argon2id-protected key, tokens in each platform's secure store, photo choices saved as HMAC-SHA-256 fingerprints instead of file names</td></tr>
+    <tr><td>Accessibility</td><td>Controls at least 28 pt, text contrast at least 4.5:1, Reduce Motion support, and a screen-reader action for every swipe and drag</td></tr>
+    <tr><td>Tech</td><td>Flutter and Dart, with Kotlin (Android), Swift (iOS, macOS) and C++ (Windows) for native features. Flutter unit and widget tests, Kotlin JUnit tests, TLA+ models checked with TLC</td></tr>
+  </table>
+</section>
+
+<section id="platforms">
+  <h2>Platforms</h2>
+  <table>
+    <tr><th>Feature</th><th>Android</th><th>iPhone</th><th>Mac</th><th>Windows</th></tr>
+    <tr><td>Clocks, themes, layouts</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+    <tr><td>Weather, calendar, world clock</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+    <tr><td>Spotify control, search, queue</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+    <tr><td>Timed lyrics</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+    <tr><td>Photo slideshow</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+    <tr><td>Bluetooth accessory batteries</td><td class="y">Yes</td><td class="n">No</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+    <tr><td>Opens itself when docked</td><td class="y">Yes</td><td class="n">No</td><td class="n">No</td><td class="n">No</td></tr>
+  </table>
+</section>
+
+<section id="contact" class="cta">
+  <h2>Want the walkthrough?</h2>
+  <p class="lead">The source code is private. I'm happy to walk through the code, the architecture or any feature on this page.</p>
+  <a class="btn" href="mailto:hardik.kotangale@gmail.com">hardik.kotangale@gmail.com</a>
+</section>
+</main>
+
+<footer>Built by <b>Hardik Kotangale</b><br>
+<a href="https://github.com/hardikkotangale">GitHub</a><a href="https://linkedin.com/in/hardik-kotangale">LinkedIn</a><a href="https://hardikotangale.com">hardikotangale.com</a></footer>
+</body>
+</html>
