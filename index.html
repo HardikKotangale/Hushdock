@@ -22,8 +22,8 @@ description: A bedside display for phones, Macs and PCs, built with Flutter.
 [data-theme=dark]{color-scheme:dark;--bg:#000;--card:#111113;--line:#48484a;--fg:#f5f5f7;--dim:#c7c7cc;--red:#ff453a;--nav:#000a;--ok:#30d158;--ind:#3a3a3e;--ind-sh:inset 0 1px 0 #ffffff26,inset 0 0 0 1px #ffffff0f,0 2px 8px #00000099;--blue:#2997ff;--purple:#bf5af2}
 @media(prefers-color-scheme:dark){:root:not([data-theme]){color-scheme:dark;--bg:#000;--card:#111113;--line:#48484a;--fg:#f5f5f7;--dim:#c7c7cc;--red:#ff453a;--nav:#000a;--ok:#30d158;--ind:#3a3a3e;--ind-sh:inset 0 1px 0 #ffffff26,inset 0 0 0 1px #ffffff0f,0 2px 8px #00000099;--blue:#2997ff;--purple:#bf5af2}}
 *{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:24px}
-body{background:var(--bg);color:var(--fg);overflow-x:hidden;font:clamp(17px,.35vw + 15.5px,21px)/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+html{overflow-x:clip;scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:24px}
+body{background:var(--bg);color:var(--fg);overflow-x:clip;font:clamp(17px,.35vw + 15.5px,21px)/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 .wrap{max-width:clamp(1040px,72vw,1320px);margin:0 auto;padding:0 max(24px,env(safe-area-inset-left)) 0 max(24px,env(safe-area-inset-right))}
 nav{position:fixed;top:0;left:0;right:0;z-index:9;display:flex;justify-content:center;pointer-events:none;transform:translateY(max(14px,env(safe-area-inset-top)));transition:transform .9s cubic-bezier(.22,1,.36,1)}
@@ -51,7 +51,7 @@ nav.compact .bar{width:min(620px,calc(100% - 32px))}
 .btn{display:inline-block;margin-top:32px;background:var(--fg);color:var(--bg);text-decoration:none;font-weight:600;border-radius:99px;padding:12px 28px}
 .shots{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:56px 0 24px}
 img{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var(--line);background:var(--card)}
-section{padding:72px 0;border-top:1px solid var(--line)}
+section{position:relative}
 h2{font-size:clamp(30px,5vw,48px);letter-spacing:-.03em;line-height:1.1}
 .lead{font-size:19px;color:var(--dim);max-width:640px;margin-top:16px}
 .feat{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
@@ -72,7 +72,7 @@ td:not(:first-child),th:not(:first-child){text-align:center}
 .y{color:var(--ok);font-weight:700}.y::before{content:"\2713\00a0"}.n::before{content:"\2013\00a0"}.n{color:var(--dim)}
 .rows td:first-child{color:var(--dim);width:150px;vertical-align:top}
 .rows td:not(:first-child){text-align:left}
-.cta{text-align:center;border-top:0;padding-bottom:88px}
+.cta{text-align:center;border-top:0;padding-bottom:24px}
 .cta .lead{margin-inline:auto}
 @media(prefers-reduced-transparency:reduce){.bar{backdrop-filter:none;background:var(--bg)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}nav,.bar,.ind{transition:none}}
@@ -131,10 +131,23 @@ nav.open .sheet{opacity:1;visibility:visible;transform:translate(-50%,0);transit
 @media(max-height:520px) and (orientation:landscape){.hero{padding-top:96px}.logo{width:72px;height:72px}}
 
 
+/* ===== FADE DIAL =====  one number scales the section tint on the page (the strength of the alternating sections).
+   0 = off, 1 = default, 1.5 = stronger. Preview live with  ?fade=1.5  on the URL. */
+:root{--fade:2;--noise:1} /* --noise: grain strength on the tinted sections (0 = off, 1 = default) */
+/* ---- section separation (Apple pattern): no lines, no gradients. Sections alternate between the page color and a slightly tinted tone, edge to edge. Each tint eases in and out over --edge (220px light, 120px dark) so the page flows (no hard seams). ---- */
+:root,[data-theme=light]{--tint-a:4;--edge:300px;--noise-a:.08;--noise-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.4 0 0 0 -1.05'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23n)'/%3E%3C/svg%3E");--foot-a:0}
+[data-theme=dark]{--tint-a:2.3;--edge:300px;--noise-a:.07;--noise-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.4 0 0 0 -1.05'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23n)'/%3E%3C/svg%3E");--foot-a:0}
+@media(prefers-color-scheme:dark){:root:not([data-theme]){--tint-a:7;--edge:120px;--noise-a:.06;--noise-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.4 0 0 0 -1.05'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23n)'/%3E%3C/svg%3E");--foot-a:0}}
+.alt{--card:var(--bg)} /* cards on a tinted section sit on the page color, like white cards on Apple's grey sections */
+.alt::before{content:"";position:absolute;z-index:-1;pointer-events:none;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);--tint:color-mix(in srgb,var(--fg) calc(var(--fade)*var(--tint-a)*1%),var(--bg));background:linear-gradient(180deg,color-mix(in srgb,var(--tint) 0%,var(--bg)) calc(var(--edge)*0),color-mix(in srgb,var(--tint) 10.4%,var(--bg)) calc(var(--edge)*0.2),color-mix(in srgb,var(--tint) 35.2%,var(--bg)) calc(var(--edge)*0.4),color-mix(in srgb,var(--tint) 64.8%,var(--bg)) calc(var(--edge)*0.6),color-mix(in srgb,var(--tint) 89.6%,var(--bg)) calc(var(--edge)*0.8),color-mix(in srgb,var(--tint) 100%,var(--bg)) calc(var(--edge)*1),color-mix(in srgb,var(--tint) 100%,var(--bg)) calc(100% - var(--edge)*1),color-mix(in srgb,var(--tint) 89.6%,var(--bg)) calc(100% - var(--edge)*0.8),color-mix(in srgb,var(--tint) 64.8%,var(--bg)) calc(100% - var(--edge)*0.6),color-mix(in srgb,var(--tint) 35.2%,var(--bg)) calc(100% - var(--edge)*0.4),color-mix(in srgb,var(--tint) 10.4%,var(--bg)) calc(100% - var(--edge)*0.2),color-mix(in srgb,var(--tint) 0%,var(--bg)) calc(100% - var(--edge)*0))}
+.alt::after{content:"";position:absolute;z-index:-1;pointer-events:none;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background-image:var(--noise-img);background-size:180px 180px;opacity:calc(var(--noise)*var(--noise-a));-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 var(--edge),#000 calc(100% - var(--edge)),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 var(--edge),#000 calc(100% - var(--edge)),transparent 100%)}
+.endblock{position:relative;padding-bottom:0}
+.endblock.alt::before{background:linear-gradient(180deg,color-mix(in srgb,var(--tint) 0%,var(--bg)) 0,color-mix(in srgb,var(--tint) 10.4%,var(--bg)) calc(var(--edge)*.2),color-mix(in srgb,var(--tint) 35.2%,var(--bg)) calc(var(--edge)*.4),color-mix(in srgb,var(--tint) 64.8%,var(--bg)) calc(var(--edge)*.6),color-mix(in srgb,var(--tint) 89.6%,var(--bg)) calc(var(--edge)*.8),var(--tint) var(--edge),var(--tint) 100%)}
+.endblock.alt::after{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 var(--edge),#000 100%);mask-image:linear-gradient(180deg,transparent 0,#000 var(--edge),#000 100%)}
+.endblock .foot{padding-top:48px}
+section{padding:clamp(80px,9vw,120px) 0}
 /* ---- footer ---- */
-.foot{margin-top:24px;border-top:0;background:linear-gradient(180deg,color-mix(in srgb,var(--fg) 0%,transparent) 0%,color-mix(in srgb,var(--fg) 0.5%,transparent) 14%,color-mix(in srgb,var(--fg) 2.4%,transparent) 28%,color-mix(in srgb,var(--fg) 6%,transparent) 42%,color-mix(in srgb,var(--fg) 10.5%,transparent) 56%,color-mix(in srgb,var(--fg) 15.5%,transparent) 70%,color-mix(in srgb,var(--fg) 19.5%,transparent) 84%,color-mix(in srgb,var(--fg) 22%,transparent) 100%);padding:104px 0 calc(104px + env(safe-area-inset-bottom));color:var(--dim)} /* bottom space clears the docked nav */
-[data-theme=dark] .foot{background:linear-gradient(180deg,color-mix(in srgb,var(--fg) 0%,transparent) 0%,color-mix(in srgb,var(--fg) 0.3%,transparent) 14%,color-mix(in srgb,var(--fg) 1.5%,transparent) 28%,color-mix(in srgb,var(--fg) 3.7%,transparent) 42%,color-mix(in srgb,var(--fg) 6.6%,transparent) 56%,color-mix(in srgb,var(--fg) 9.7%,transparent) 70%,color-mix(in srgb,var(--fg) 12.1%,transparent) 84%,color-mix(in srgb,var(--fg) 13.6%,transparent) 100%)}
-@media(prefers-color-scheme:dark){:root:not([data-theme]) .foot{background:linear-gradient(180deg,color-mix(in srgb,var(--fg) 0%,transparent) 0%,color-mix(in srgb,var(--fg) 0.3%,transparent) 14%,color-mix(in srgb,var(--fg) 1.5%,transparent) 28%,color-mix(in srgb,var(--fg) 3.7%,transparent) 42%,color-mix(in srgb,var(--fg) 6.6%,transparent) 56%,color-mix(in srgb,var(--fg) 9.7%,transparent) 70%,color-mix(in srgb,var(--fg) 12.1%,transparent) 84%,color-mix(in srgb,var(--fg) 13.6%,transparent) 100%)}}
+.foot{position:relative;margin-top:0;padding:24px 0 calc(104px + env(safe-area-inset-bottom));color:var(--dim)} /* bottom space clears the docked nav */
 .fgrid{display:grid;grid-template-columns:1.8fr 1fr 1.2fr;gap:40px 32px;align-items:start}
 .fbrand{display:grid;gap:22px}
 .fid{display:flex;gap:14px;align-items:center}
@@ -373,7 +386,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offse
 </header>
 
 <main class="wrap">
-<section>
+<section class="alt">
   <h2>One Flutter codebase.<br>Four platforms.</h2>
   <p class="lead">Inspired by iOS StandBy. Layouts, themes and motion are my own, built on the open-source Standby Pro.</p>
   <div class="bento">
@@ -482,7 +495,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offse
 
 </div>
 
-<section id="engineering" data-chap="Engineering">
+<section id="engineering" class="alt" data-chap="Engineering">
   <h2>Built like it matters.</h2>
   <p class="lead">Four problems worth the trouble.</p>
   <div class="eng">
@@ -554,14 +567,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offse
       <tr><th scope="row">Opens itself when docked</th><td><span class="dot on" role="img" aria-label="Yes">&#10003;</span></td><td><span class="dot" role="img" aria-label="No">&ndash;</span></td><td><span class="dot" role="img" aria-label="No">&ndash;</span></td><td><span class="dot" role="img" aria-label="No">&ndash;</span></td></tr>
   </table></div>
 </section>
+</main>
 
-<section id="contact" class="cta" data-chap="Contact">
+<div class="endblock alt">
+<section id="contact" class="cta wrap" data-chap="Contact">
   <h2>Want the walkthrough?</h2>
   <p class="lead">The source is private. Happy to walk through any of it.</p>
   <a class="btn" href="mailto:hardik.kotangale@gmail.com">hardik.kotangale@gmail.com</a>
 </section>
-</main>
-
 <footer class="foot">
   <div class="wrap">
     <div class="fgrid">
@@ -582,6 +595,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offse
     </div>
   </div>
 </footer>
+</div>
 <script>
 const b=document.getElementById("theme"),h=document.documentElement;
 function set(t){h.dataset.theme=t;try{localStorage.setItem("theme",t)}catch(e){}document.querySelector('meta[name=theme-color]').content=t=="dark"?"#000":"#fbfbfd"}
@@ -695,6 +709,9 @@ if(matchMedia("(hover:none)").matches&&!matchMedia("(prefers-reduced-motion:redu
   const sc=document.querySelector(".social");
   new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){[...sc.children].forEach((a,i)=>{setTimeout(()=>a.classList.add("tap"),300+i*200);setTimeout(()=>a.classList.remove("tap"),850+i*200)});o.disconnect()}},{threshold:1}).observe(sc);
 }
+// Preview the fade dial live: add ?fade=1.5 to the URL (0 = off, 1 = default).
+{const f=parseFloat(new URLSearchParams(location.search).get("fade"));if(!isNaN(f))document.documentElement.style.setProperty("--fade",Math.max(0,Math.min(3,f)))}
+{const n=parseFloat(new URLSearchParams(location.search).get("noise"));if(!isNaN(n))document.documentElement.style.setProperty("--noise",Math.max(0,Math.min(4,n)))} // preview grain: ?noise=2
 </script>
 </body>
 </html>
