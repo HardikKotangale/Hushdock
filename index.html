@@ -189,7 +189,8 @@ footer{padding-bottom:max(32px,env(safe-area-inset-bottom))}
   .js .story{display:grid;grid-template-columns:minmax(0,9fr) minmax(0,13fr);gap:48px}
   .js .scene{min-height:88vh;display:flex;flex-direction:column;justify-content:center;opacity:.25;transition:opacity .7s cubic-bezier(.22,1,.36,1)}
   .js .scene.on{opacity:1}
-  .js .scene .inline{display:none}
+  .js .scene{position:relative}
+  .js .scene .inline{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);border:0;white-space:nowrap;pointer-events:none}
   .js .scene h3{font-size:clamp(36px,3.8vw,60px);letter-spacing:-.03em;line-height:1.08}
   .js .scene p{font-size:clamp(20px,1.8vw,29px);max-width:28ch}
   .js .stagecol{display:block;margin-right:calc(var(--ex,0px)*-1)}
@@ -403,7 +404,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offse
     <article class="scene" data-chap="Night red">
       <h3>Night red</h3>
       <p>Fades to dim red with no blue light, so it never lights up the room.</p>
-      <div class="inline"><img src="images/night-mode.png" width="1400" height="640" alt="Night mode, dim red" loading="lazy" decoding="async"></div>
+      <div class="inline"><img src="images/night-mode.png" width="1400" height="640" alt="The clock in Night red: dim red digits on black, with no blue light" loading="lazy" decoding="async"></div>
     </article>
     <article class="scene" data-chap="Weather & calendar">
       <h3>Weather &amp; calendar</h3><p>Animated weather for your location, plus today, month or upcoming meetings from your calendar.</p>
@@ -440,7 +441,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offse
     </article>
     </div>
     <div class="stagecol">
-      <div class="stage" id="stage">
+      <div class="stage" id="stage" aria-hidden="true">
         <div class="panel"></div>
         <div class="slides" id="slides"></div>
         <div class="cap"><span id="capt"></span><div class="ticks" id="ticks"></div></div>
@@ -553,7 +554,7 @@ b.onclick=()=>{
 function count(el){
   const to=+el.dataset.count,t0=performance.now(),d=1400;
   if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
-  (function f(t){const p=Math.min((t-t0)/d,1);el.textContent=Math.round(to*(1-Math.pow(2,-10*p)));if(p<1)requestAnimationFrame(f);else el.textContent=to})(t0);
+  (function f(t){const p=Math.min(Math.max((t-t0)/d,0),1);el.textContent=Math.round(to*(1-Math.pow(2,-10*p)));if(p<1)requestAnimationFrame(f);else el.textContent=to})(t0);
 }
 // Scroll reveal: spring-like ease-out, once.
 const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");e.target.querySelectorAll("[data-count]").forEach(count);rio.unobserve(e.target)}}),{threshold:.12,rootMargin:"0px 0px -6% 0px"});
@@ -594,7 +595,7 @@ matchMedia("(min-width:680px)").addEventListener("change",e=>e.matches&&setMenu(
 const scenes=[...document.querySelectorAll(".scene")],slidesEl=document.getElementById("slides"),ticksEl=document.getElementById("ticks"),
   capt=document.getElementById("capt");
 const slides=scenes.map(sc=>{
-  const d=document.createElement("div"),imgs=[...sc.querySelectorAll(".inline img")].map(i=>i.cloneNode());
+  const d=document.createElement("div"),imgs=[...sc.querySelectorAll(".inline img")].map(i=>{const c=i.cloneNode();c.alt="";return c});
   d.className="slide"+(imgs.length>1?" two":"");imgs.forEach(i=>{i.loading="lazy"});d.append(...imgs);slidesEl.append(d);
   ticksEl.append(document.createElement("i"));return d});
 const ticks=[...ticksEl.children];let lastS=-1;
